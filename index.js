@@ -2,6 +2,10 @@ const request = require("request-promise")
 const cheerio = require("cheerio")
 const ObjectsToCsv = require("objects-to-csv")
 
+// For Handling Bad Network Connectivity
+// yarn add requestretry
+// const request = require('requestretry').defaults({ fullResponse: false, maxAttempts: ,retryDelay:  })
+
 const url = "https://delhi.craigslist.org/search/sof#search=1~thumb~0~0"
 
 async function sleep(milliseconds) {
