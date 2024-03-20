@@ -1,5 +1,6 @@
 const request = require("request-promise")
 const cheerio = require("cheerio")
+const ObjectsToCsv = require("objects-to-csv")
 
 const url = "https://delhi.craigslist.org/search/sof#search=1~thumb~0~0"
 
@@ -31,6 +32,8 @@ async function scrapeCraigsList() {
     const listingsWithJobDescriptions = await scrapeJobDescriptions(listings)
 
     console.log(listingsWithJobDescriptions)
+
+    await createCsvFile(listingsWithJobDescriptions)
   } catch (err) {
     console.error(err)
   }
@@ -57,6 +60,16 @@ async function scrapeJobDescriptions(listings) {
     }
   }
   return listings
+}
+
+async function createCsvFile(data) {
+  let csv = new ObjectsToCsv(data)
+
+  // Save to File
+  await csv.toDisk("./test.csv")
+
+  // // Return the CSV file as string
+  // console.log(await csv.toString())
 }
 
 scrapeCraigsList()
